@@ -14,7 +14,7 @@ const int MIN_QUALITY = -60;
 const int SCAN_INTERVAL = 2000;
 const char* PUBLIC_DEVICE_NAME = "SchoolBuddy";
 const String HISTORY_FILE_PATH = "/history.txt";
-const String GET_HISTORY_COMMAND = "#GET_HISTORY#\n";
+const String GET_HISTORY_COMMAND = "GET_HISTORY#";
 
 BLEScan* pBLEScan;
 String serialInput = "";
@@ -39,7 +39,7 @@ void CheckSerialInput() {
   while (Serial.available()) {
     char inChar = (char)Serial.read();
     serialInput += inChar;
-    if (inChar == '\n') {
+    if (inChar == '#') {
       serialCommandReceived = true;
     }
   }
@@ -73,7 +73,8 @@ void InitBLEScan() {
 
 void HandleSerialCommand() {
   if (serialInput.equals(GET_HISTORY_COMMAND)) {
-    Serial.println(GetCurrentHistoryFileContent());
+    Serial.print(GetCurrentHistoryFileContent());
+    Serial.print('#');
   }
   serialInput = "";
   serialCommandReceived = false;
@@ -114,7 +115,7 @@ void ManageSensorInProximity(String sensorName, String sensorAddress, int sensor
 
 void UpdateHistoryFileContent(String sensorAddress) {
   const String currentContent = GetCurrentHistoryFileContent();
-  const String newContent = currentContent + sensorAddress + ";\r\n";
+  const String newContent = currentContent + sensorAddress + ";\n";
   File file = SPIFFS.open(HISTORY_FILE_PATH, FILE_WRITE);
   file.print(newContent);
   file.close();

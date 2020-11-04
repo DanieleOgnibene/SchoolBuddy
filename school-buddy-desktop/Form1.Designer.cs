@@ -1,6 +1,6 @@
 ﻿namespace school_buddy_desktop
 {
-    partial class Form1
+    partial class SchoolBuddyMain
     {
         /// <summary>
         /// Required designer variable.
@@ -29,100 +29,280 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.portsComboBox = new System.Windows.Forms.ComboBox();
-            this.connectionButton = new System.Windows.Forms.Button();
-            this.sendMessage = new System.Windows.Forms.Button();
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.serialPort = new System.IO.Ports.SerialPort(this.components);
+            this.tabControlPages = new System.Windows.Forms.TabControl();
+            this.tabHistory = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.gBoxResponse = new System.Windows.Forms.GroupBox();
+            this.rTxtHistoryResponse = new System.Windows.Forms.RichTextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnHistoryGet = new System.Windows.Forms.Button();
+            this.btnHistorySave = new System.Windows.Forms.Button();
+            this.progressBarConnection = new System.Windows.Forms.ProgressBar();
+            this.toolStripSchoolBuddyMain = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.portToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripCbPorts = new System.Windows.Forms.ToolStripComboBox();
+            this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tabControlPages.SuspendLayout();
+            this.tabHistory.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.gBoxResponse.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.toolStripSchoolBuddyMain.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox2
+            // serialPort
             // 
-            this.groupBox2.Controls.Add(this.portsComboBox);
-            this.groupBox2.Controls.Add(this.connectionButton);
-            this.groupBox2.Location = new System.Drawing.Point(18, 221);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(256, 71);
-            this.groupBox2.TabIndex = 10;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Serial Connection";
+            this.serialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort_DataReceived);
             // 
-            // portsComboBox
+            // tabControlPages
             // 
-            this.portsComboBox.FormattingEnabled = true;
-            this.portsComboBox.Location = new System.Drawing.Point(150, 37);
-            this.portsComboBox.Name = "portsComboBox";
-            this.portsComboBox.Size = new System.Drawing.Size(93, 24);
-            this.portsComboBox.TabIndex = 1;
+            this.tabControlPages.Controls.Add(this.tabHistory);
+            this.tabControlPages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPages.Location = new System.Drawing.Point(4, 37);
+            this.tabControlPages.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabControlPages.Name = "tabControlPages";
+            this.tabControlPages.SelectedIndex = 0;
+            this.tabControlPages.Size = new System.Drawing.Size(376, 263);
+            this.tabControlPages.TabIndex = 0;
             // 
-            // connectionButton
+            // tabHistory
             // 
-            this.connectionButton.Location = new System.Drawing.Point(8, 31);
-            this.connectionButton.Name = "connectionButton";
-            this.connectionButton.Size = new System.Drawing.Size(136, 34);
-            this.connectionButton.TabIndex = 0;
-            this.connectionButton.Text = "Connect";
-            this.connectionButton.UseVisualStyleBackColor = true;
-            this.connectionButton.Click += new System.EventHandler(this.ConnectionButtonClick);
+            this.tabHistory.Controls.Add(this.tableLayoutPanel3);
+            this.tabHistory.Location = new System.Drawing.Point(4, 27);
+            this.tabHistory.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabHistory.Name = "tabHistory";
+            this.tabHistory.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabHistory.Size = new System.Drawing.Size(368, 232);
+            this.tabHistory.TabIndex = 1;
+            this.tabHistory.Text = "History";
+            this.tabHistory.UseVisualStyleBackColor = true;
             // 
-            // sendMessage
+            // tableLayoutPanel3
             // 
-            this.sendMessage.Location = new System.Drawing.Point(6, 159);
-            this.sendMessage.Name = "sendMessage";
-            this.sendMessage.Size = new System.Drawing.Size(136, 38);
-            this.sendMessage.TabIndex = 4;
-            this.sendMessage.Text = "Get History";
-            this.sendMessage.UseVisualStyleBackColor = true;
-            this.sendMessage.Click += new System.EventHandler(this.GetHistory_Click);
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.gBoxResponse, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.panel2, 0, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(360, 226);
+            this.tableLayoutPanel3.TabIndex = 4;
             // 
-            // textBox2
+            // gBoxResponse
             // 
-            this.textBox2.Location = new System.Drawing.Point(6, 21);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(414, 132);
-            this.textBox2.TabIndex = 12;
+            this.gBoxResponse.Controls.Add(this.rTxtHistoryResponse);
+            this.gBoxResponse.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gBoxResponse.Location = new System.Drawing.Point(3, 3);
+            this.gBoxResponse.Name = "gBoxResponse";
+            this.gBoxResponse.Size = new System.Drawing.Size(354, 187);
+            this.gBoxResponse.TabIndex = 2;
+            this.gBoxResponse.TabStop = false;
+            this.gBoxResponse.Text = "Response Preview";
             // 
-            // groupBox1
+            // rTxtHistoryResponse
             // 
-            this.groupBox1.Controls.Add(this.sendMessage);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(426, 203);
-            this.groupBox1.TabIndex = 13;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Receive";
+            this.rTxtHistoryResponse.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rTxtHistoryResponse.Location = new System.Drawing.Point(3, 22);
+            this.rTxtHistoryResponse.Name = "rTxtHistoryResponse";
+            this.rTxtHistoryResponse.ReadOnly = true;
+            this.rTxtHistoryResponse.Size = new System.Drawing.Size(348, 162);
+            this.rTxtHistoryResponse.TabIndex = 1;
+            this.rTxtHistoryResponse.Text = "";
             // 
-            // Form1
+            // panel2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.panel2.AutoSize = true;
+            this.panel2.Controls.Add(this.btnHistoryGet);
+            this.panel2.Controls.Add(this.btnHistorySave);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel2.Location = new System.Drawing.Point(121, 193);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(239, 33);
+            this.panel2.TabIndex = 3;
+            // 
+            // btnHistoryGet
+            // 
+            this.btnHistoryGet.Location = new System.Drawing.Point(23, 3);
+            this.btnHistoryGet.Name = "btnHistoryGet";
+            this.btnHistoryGet.Size = new System.Drawing.Size(102, 27);
+            this.btnHistoryGet.TabIndex = 7;
+            this.btnHistoryGet.Text = "&Get";
+            this.btnHistoryGet.UseVisualStyleBackColor = true;
+            this.btnHistoryGet.Click += new System.EventHandler(this.btnHistoryGet_Click);
+            // 
+            // btnHistorySave
+            // 
+            this.btnHistorySave.Location = new System.Drawing.Point(134, 3);
+            this.btnHistorySave.Name = "btnHistorySave";
+            this.btnHistorySave.Size = new System.Drawing.Size(102, 27);
+            this.btnHistorySave.TabIndex = 8;
+            this.btnHistorySave.Text = "&Save";
+            this.btnHistorySave.UseVisualStyleBackColor = true;
+            this.btnHistorySave.Click += new System.EventHandler(this.btnHistorySave_Click);
+            // 
+            // progressBarConnection
+            // 
+            this.progressBarConnection.Dock = System.Windows.Forms.DockStyle.Right;
+            this.progressBarConnection.Location = new System.Drawing.Point(308, 0);
+            this.progressBarConnection.Name = "progressBarConnection";
+            this.progressBarConnection.Size = new System.Drawing.Size(70, 28);
+            this.progressBarConnection.TabIndex = 6;
+            // 
+            // toolStripSchoolBuddyMain
+            // 
+            this.toolStripSchoolBuddyMain.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStripSchoolBuddyMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.disconnectToolStripMenuItem,
+            this.connectToolStripMenuItem,
+            this.portToolStripMenuItem});
+            this.toolStripSchoolBuddyMain.Location = new System.Drawing.Point(0, 0);
+            this.toolStripSchoolBuddyMain.Name = "toolStripSchoolBuddyMain";
+            this.toolStripSchoolBuddyMain.Size = new System.Drawing.Size(308, 28);
+            this.toolStripSchoolBuddyMain.TabIndex = 1;
+            this.toolStripSchoolBuddyMain.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 26);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // portToolStripMenuItem
+            // 
+            this.portToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.portToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.portToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripCbPorts});
+            this.portToolStripMenuItem.Name = "portToolStripMenuItem";
+            this.portToolStripMenuItem.Size = new System.Drawing.Size(49, 26);
+            this.portToolStripMenuItem.Text = "Port";
+            // 
+            // toolStripCbPorts
+            // 
+            this.toolStripCbPorts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripCbPorts.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.toolStripCbPorts.Name = "toolStripCbPorts";
+            this.toolStripCbPorts.Size = new System.Drawing.Size(121, 28);
+            this.toolStripCbPorts.DropDownClosed += new System.EventHandler(this.toolStripCbPorts_DropDownClosed);
+            this.toolStripCbPorts.Click += new System.EventHandler(this.toolStripCbPorts_Click);
+            // 
+            // disconnectToolStripMenuItem
+            // 
+            this.disconnectToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
+            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(96, 24);
+            this.disconnectToolStripMenuItem.Text = "&Disconnect";
+            this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
+            // 
+            // connectToolStripMenuItem
+            // 
+            this.connectToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(77, 24);
+            this.connectToolStripMenuItem.Text = "&Connect";
+            this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
+            // 
+            // panel3
+            // 
+            this.panel3.AutoSize = true;
+            this.panel3.Controls.Add(this.toolStripSchoolBuddyMain);
+            this.panel3.Controls.Add(this.progressBarConnection);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(3, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(378, 28);
+            this.panel3.TabIndex = 9;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.panel3, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tabControlPages, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(384, 303);
+            this.tableLayoutPanel1.TabIndex = 10;
+            // 
+            // SchoolBuddyMain
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(450, 304);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.groupBox2);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.ClientSize = new System.Drawing.Size(384, 303);
+            this.Controls.Add(this.tableLayoutPanel1);
+            this.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MainMenuStrip = this.toolStripSchoolBuddyMain;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MinimumSize = new System.Drawing.Size(402, 350);
+            this.Name = "SchoolBuddyMain";
+            this.Text = "School Buddy";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SchoolBuddyMain_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.tabControlPages.ResumeLayout(false);
+            this.tabHistory.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
+            this.gBoxResponse.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.toolStripSchoolBuddyMain.ResumeLayout(false);
+            this.toolStripSchoolBuddyMain.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox portsComboBox;
-        private System.Windows.Forms.Button connectionButton;
-        private System.Windows.Forms.Button sendMessage;
-        private System.IO.Ports.SerialPort serialPort1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.IO.Ports.SerialPort serialPort;
+        private System.Windows.Forms.TabControl tabControlPages;
+        private System.Windows.Forms.TabPage tabHistory;
+        private System.Windows.Forms.MenuStrip toolStripSchoolBuddyMain;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.GroupBox gBoxResponse;
+        private System.Windows.Forms.RichTextBox rTxtHistoryResponse;
+        private System.Windows.Forms.ProgressBar progressBarConnection;
+        private System.Windows.Forms.Button btnHistoryGet;
+        private System.Windows.Forms.Button btnHistorySave;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.ToolStripMenuItem portToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox toolStripCbPorts;
     }
 }
 
