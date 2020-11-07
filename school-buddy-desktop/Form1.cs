@@ -172,6 +172,7 @@ namespace school_buddy_desktop
         {
             InitFormState();
         }
+
         private void SchoolBuddyMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             CloseSerialConnection();
@@ -226,6 +227,7 @@ namespace school_buddy_desktop
         {
             CloseSerialConnection();
         }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
