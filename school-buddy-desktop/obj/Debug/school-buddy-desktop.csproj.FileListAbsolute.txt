@@ -1,0 +1,10 @@
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\bin\Debug\school-buddy-desktop.exe.config
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\bin\Debug\school-buddy-desktop.exe
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\bin\Debug\school-buddy-desktop.pdb
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\obj\Debug\school-buddy-desktop.csprojAssemblyReference.cache
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\obj\Debug\school_buddy_desktop.Properties.Resources.resources
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\obj\Debug\school-buddy-desktop.csproj.GenerateResource.cache
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\obj\Debug\school-buddy-desktop.csproj.CoreCompileInputs.cache
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\obj\Debug\school-buddy-desktop.exe
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\obj\Debug\school-buddy-desktop.pdb
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\obj\Debug\school_buddy_desktop.SchoolBuddyMain.resources
