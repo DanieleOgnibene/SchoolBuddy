@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
@@ -17,12 +19,12 @@ namespace school_buddy_desktop
         #region CONSTANTS
 
         private readonly char END_COMMAND_CHAR = '#';
+        private readonly char COMMAND_PARAMTERS_SEPARATOR = ';';
         private readonly string COMMAND_OK_RESPONSE = "OK";
         private readonly string GET_HISTORY_COMMAND = "GET_HISTORY_";
-        private readonly string GET_DEVICE_NAME_COMMAND = "GET_DEVICE_NAME_";
+        private readonly string GET_DEVICE_INFO_COMMAND = "GET_DEVICE_INFO_";
         private readonly string RESET_DEVICE_COMMAND = "RESET_DEVICE_";
         private readonly string INIT_DEVICE_COMMAND = "INIT_DEVICE_";
-        private readonly string COMMAND_PARAMTERS_SEPARATOR = ";";
 
         private readonly string WINDOW_DEFAULT_TITLE = "School Buddy";
         private readonly string PORT_TOOL_STRIP_DEFAULT_TEXT = "Port";
@@ -30,6 +32,7 @@ namespace school_buddy_desktop
         #endregion
 
         private string _serialData = "";
+        private bool waitingSerialResponse = false;
 
         public SchoolBuddyMain()
         {
@@ -89,7 +92,7 @@ namespace school_buddy_desktop
                 serialPort.BaudRate = 9600;
                 serialPort.Open();
                 SetFormStateConnectedReady();
-                SendGetDeviceNameSerialCommand();
+                SendGetDeviceInfoSerialCommand();
             }
             catch (Exception ex)
             {
@@ -99,20 +102,24 @@ namespace school_buddy_desktop
 
         private void SendSerialCommand(string command)
         {
+            _serialData = "";
             serialPort.Write(command + END_COMMAND_CHAR);
             SetFormStateConnectedWaitingSerialResponse();
+            waitingSerialResponse = true;
         }
 
         private void SendInitDeviceSerialCommand()
         {
             var timeStamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            var command = INIT_DEVICE_COMMAND + timeStamp + COMMAND_PARAMTERS_SEPARATOR + txtConfigurationName.Text;
+            Debug.WriteLine(timeStamp);
+            var command = INIT_DEVICE_COMMAND + timeStamp + COMMAND_PARAMTERS_SEPARATOR + tBoxConfigurationName.Text;
+            Debug.WriteLine(command);
             SendSerialCommand(command);
         }
 
-        private void SendGetDeviceNameSerialCommand()
+        private void SendGetDeviceInfoSerialCommand()
         {
-            SendSerialCommand(GET_DEVICE_NAME_COMMAND);
+            SendSerialCommand(GET_DEVICE_INFO_COMMAND);
         }
 
         private void SendGetHistorySerialCommand()
@@ -142,10 +149,10 @@ namespace school_buddy_desktop
                 var history = GetSerialResponseFromSerialData(GET_HISTORY_COMMAND);
                 SerialGetHistoryComplete(history);
             }
-            if (_serialData.StartsWith(GET_DEVICE_NAME_COMMAND))
+            if (_serialData.StartsWith(GET_DEVICE_INFO_COMMAND))
             {
-                var response = GetSerialResponseFromSerialData(GET_DEVICE_NAME_COMMAND);
-                SerialGetDeviceNameComplete(response);
+                var response = GetSerialResponseFromSerialData(GET_DEVICE_INFO_COMMAND);
+                SerialGetDeviceInfoComplete(response);
             }
             if (_serialData.StartsWith(RESET_DEVICE_COMMAND))
             {
@@ -157,22 +164,40 @@ namespace school_buddy_desktop
                 var response = GetSerialResponseFromSerialData(INIT_DEVICE_COMMAND);
                 SerialInitDeviceComplete(response);
             }
-            _serialData = "";
-            SetFormStateConnectedReady();
+            if (!waitingSerialResponse)
+            {
+                _serialData = "";
+                SetFormStateConnectedReady();
+            }
         }
 
         private void SerialGetHistoryComplete(string response)
         {
             rTxtHistoryResponse.Text = response;
-            SaveHistoryReceived();
+            if (response.Length > 0)
+            {
+                btnHistorySave.Enabled = true;
+                SaveHistoryReceived();
+            }
+            else
+            {
+                MessageBox.Show("This device's history is empty.", "History", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            waitingSerialResponse = false;
         }
 
-        private void SerialGetDeviceNameComplete(string response)
+        private void SerialGetDeviceInfoComplete(string response)
         {
-            if (response != "")
-            {
-                ActiveForm.Text = WINDOW_DEFAULT_TITLE + " | " + response;
-            }
+            var deviceInfos = response.Split(COMMAND_PARAMTERS_SEPARATOR);
+            var deviceName = deviceInfos[0];
+            var deviceMAC = deviceInfos[1];
+            var titleDeviceInfo = (deviceName != "" ? (" | " + deviceName) : "") + " | " + deviceMAC;
+            ActiveForm.Text = WINDOW_DEFAULT_TITLE + titleDeviceInfo;
+            tBoxAboutMac.Text = deviceMAC;
+            tBoxAboutName.Text = deviceName;
+            tBoxConfigurationName.Text = deviceName;
+            tBoxAboutVersion.Text = "1.0.0";
+            waitingSerialResponse = false;
         }
 
         private void SerialResetDeviceComplete(string response)
@@ -180,7 +205,7 @@ namespace school_buddy_desktop
             if (response.Equals(COMMAND_OK_RESPONSE))
             {
                 MessageBox.Show("Device Reset", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                SetDefaultWindowTitle();
+                SendGetDeviceInfoSerialCommand();
             }
         }
 
@@ -189,7 +214,7 @@ namespace school_buddy_desktop
             if (response.Equals(COMMAND_OK_RESPONSE))
             {
                 MessageBox.Show("Device Init", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                SendGetDeviceNameSerialCommand();
+                SendGetDeviceInfoSerialCommand();
             }
         }
 
@@ -206,7 +231,7 @@ namespace school_buddy_desktop
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = "1a-e8-de-a3-93-0c  @" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm");
-            saveFileDialog.Filter = "Text File|*.txt";
+            saveFileDialog.Filter = "Text File|*.csv";
             saveFileDialog.ValidateNames = true;
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -219,8 +244,26 @@ namespace school_buddy_desktop
         {
             try
             {
-                StreamWriter streamWriter = new StreamWriter(filePath);
-                streamWriter.Write(rTxtHistoryResponse.Text);
+                var streamWriter = new StreamWriter(filePath);
+                var content = rTxtHistoryResponse.Text;
+                var lines = content.Split('\n');
+                var header = string.Format("{0};{1}", "MAC Address", "Time");
+                streamWriter.WriteLine(header);
+                streamWriter.Flush();
+                foreach (string line in lines)
+                {
+                    if (line != "")
+                    {
+                        var parameters = line.Split(';');
+                        var address = parameters[0];
+                        Debug.WriteLine(parameters[1]);
+                        Debug.WriteLine(Int32.Parse(parameters[1]));
+                        var localDateTime = UnixTimeStampToLocalDateTime(Int32.Parse(parameters[1]));
+                        var newLine = string.Format("{0};{1}", address, localDateTime);
+                        streamWriter.WriteLine(newLine);
+                        streamWriter.Flush();
+                    }
+                }
                 streamWriter.Close();
             }
             catch (Exception ex)
@@ -238,7 +281,6 @@ namespace school_buddy_desktop
         {
             disconnectToolStripMenuItem.Enabled = false;
 
-            btnHistorySave.Enabled = false;
             btnHistoryGet.Enabled = false;
 
             btnConfigurationConfigure.Enabled = false;
@@ -254,7 +296,6 @@ namespace school_buddy_desktop
             portToolStripMenuItem.Enabled = false;
             progressBarConnection.Value = 100;
 
-            btnHistorySave.Enabled = true;
             btnHistoryGet.Enabled = true;
 
             btnConfigurationConfigure.Enabled = true;
@@ -274,6 +315,11 @@ namespace school_buddy_desktop
 
             btnHistoryGet.Enabled = false;
 
+            tBoxAboutMac.Text = "";
+            tBoxAboutName.Text = "";
+            tBoxAboutVersion.Text = "";
+
+            tBoxConfigurationName.Text = "";
             btnConfigurationConfigure.Enabled = false;
             btnConfigurationReset.Enabled = false;
 
@@ -303,6 +349,12 @@ namespace school_buddy_desktop
         private void SetPortToolStripTextWithPortName(string portName)
         {
             portToolStripMenuItem.Text = PORT_TOOL_STRIP_DEFAULT_TEXT + ": \"" + portName + "\"";
+        }
+
+        private DateTime UnixTimeStampToLocalDateTime(int unixTimeStamp)
+        {
+            var dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(unixTimeStamp);
+            return dateTimeOffset.LocalDateTime;
         }
 
         #endregion

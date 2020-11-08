@@ -21,6 +21,7 @@ void ProximitySensorSetup() {
 void ProximitySensorLoop() {
   pBLEScan->start(1, OnScanResults, false);
   pBLEScan->clearResults();
+  CheckForHistoryCleanup();
   delay(BLE_SCAN_INTERVAL);
 }
 
@@ -71,13 +72,28 @@ bool IsNewSensorAddress(String sensorAddress, int timeStamp) {
     return true;
   }
   int lastTimeStampIndex = sensorAddressIndex + sensorAddress.length() + 1;
-  int lastTimeStampEndIndex = currentHistoryFileContent.indexOf(";", lastTimeStampIndex);
+  int lastTimeStampEndIndex = currentHistoryFileContent.indexOf(';', lastTimeStampIndex);
   String lastTimeStampString = currentHistoryFileContent.substring(lastTimeStampIndex, lastTimeStampEndIndex);
   int lastTimeStamp = lastTimeStampString.toInt();
-  int minimumTimeBetweenSaves = 60;
+  int minimumTimeBetweenSaves = 86400;
   return (timeStamp - minimumTimeBetweenSaves) > lastTimeStamp;
 }
 
 void ManageSensorInProximity(String sensorAddress, int timeStamp) {
   UpdateHistoryFileContent(sensorAddress, timeStamp);
+}
+
+void CheckForHistoryCleanup() {
+  String lastCleanupTimeStamp = GetHistoryCleanupTimeStampFileContent();
+  bool hasToCleanup = lastCleanupTimeStamp == "" || (rtc.now().unixtime() - 86400) < lastCleanupTimeStamp.toInt();
+  if (hasToCleanup) {
+    RunHistoryCleanup();
+  }
+}
+
+void RunHistoryCleanup() {
+  int nowTimeStamp = rtc.now().unixtime();
+  int minTimeStamp = nowTimeStamp - 1296000;
+  RunHistoryFileContentCleanup(minTimeStamp);
+  UpdateHistoryCleanupTimeStampFileContent(nowTimeStamp);
 }

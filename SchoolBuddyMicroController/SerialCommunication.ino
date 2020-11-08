@@ -3,7 +3,7 @@ const char COMMAND_PARAMTERS_SEPARATOR = ';';
 const String COMMAND_OK_RESPONSE = "OK";
 const String COMMAND_KO_RESPONSE = "KO";
 const String GET_HISTORY_COMMAND = "GET_HISTORY_";
-const String GET_DEVICE_NAME_COMMAND = "GET_DEVICE_NAME_";
+const String GET_DEVICE_INFO_COMMAND = "GET_DEVICE_INFO_";
 const String RESET_DEVICE_COMMAND = "RESET_DEVICE_";
 const String INIT_DEVICE_COMMAND = "INIT_DEVICE_";
 const int SERIAL_COMMUNICATION_INTERVAL = 2000;
@@ -52,7 +52,7 @@ void HandleSerialCommand() {
   if (serialInput.startsWith(INIT_DEVICE_COMMAND)) {
     HandleInitDeviceCommand();
   }
-  if (serialInput.startsWith(GET_DEVICE_NAME_COMMAND)) {
+  if (serialInput.startsWith(GET_DEVICE_INFO_COMMAND)) {
     HandleGetDeviceNameCommand();
   }
   serialInput = "";
@@ -81,14 +81,17 @@ void HandleInitDeviceCommand() {
 }
 
 void HandleGetDeviceNameCommand() {
-  Serial.print(GET_DEVICE_NAME_COMMAND);
+  Serial.print(GET_DEVICE_INFO_COMMAND);
   Serial.print(GetDeviceNameFileContent());
+  Serial.print(COMMAND_PARAMTERS_SEPARATOR);
+  Serial.print(BLEDevice::getAddress().toString().c_str());
   Serial.print(END_COMMAND_CHAR);
 }
 
 void ResetDevice() {
   RemoveHistoryFile();
   RemoveDeviceNameFile();
+  RemoveHistoryCleanupTimeStampFile();
 }
 
 void InitDevice() {
