@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "school-buddy-desktop", "school-buddy-desktop.csproj", "{0A436C7E-A5F5-42AB-BF96-2BDDA404F9C5}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SchoolBuddySetup", "..\SchoolBuddySetup\SchoolBuddySetup.vdproj", "{023B0D15-803D-419D-B2E8-AF444820683D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A436C7E-A5F5-42AB-BF96-2BDDA404F9C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A436C7E-A5F5-42AB-BF96-2BDDA404F9C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A436C7E-A5F5-42AB-BF96-2BDDA404F9C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A436C7E-A5F5-42AB-BF96-2BDDA404F9C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{023B0D15-803D-419D-B2E8-AF444820683D}.Debug|Any CPU.ActiveCfg = Debug
+		{023B0D15-803D-419D-B2E8-AF444820683D}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA05EA54-8225-4861-8917-5CF2CA31E332}
+	EndGlobalSection
+EndGlobal
