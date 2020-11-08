@@ -38,6 +38,13 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnHistoryGet = new System.Windows.Forms.Button();
             this.btnHistorySave = new System.Windows.Forms.Button();
+            this.tabConfiguration = new System.Windows.Forms.TabPage();
+            this.gBoxConfigurationConfigureDevice = new System.Windows.Forms.GroupBox();
+            this.btnConfigurationConfigure = new System.Windows.Forms.Button();
+            this.lblConfigurationName = new System.Windows.Forms.Label();
+            this.txtConfigurationName = new System.Windows.Forms.TextBox();
+            this.gBoxConfigurationRemoveAllData = new System.Windows.Forms.GroupBox();
+            this.btnConfigurationReset = new System.Windows.Forms.Button();
             this.progressBarConnection = new System.Windows.Forms.ProgressBar();
             this.toolStripSchoolBuddyMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,14 +56,21 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.tabControlPages.SuspendLayout();
             this.tabHistory.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.gBoxResponse.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tabConfiguration.SuspendLayout();
+            this.gBoxConfigurationConfigureDevice.SuspendLayout();
+            this.gBoxConfigurationRemoveAllData.SuspendLayout();
             this.toolStripSchoolBuddyMain.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // serialPort
@@ -66,6 +80,7 @@
             // tabControlPages
             // 
             this.tabControlPages.Controls.Add(this.tabHistory);
+            this.tabControlPages.Controls.Add(this.tabConfiguration);
             this.tabControlPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlPages.Location = new System.Drawing.Point(4, 33);
             this.tabControlPages.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -81,7 +96,7 @@
             this.tabHistory.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabHistory.Name = "tabHistory";
             this.tabHistory.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabHistory.Size = new System.Drawing.Size(370, 248);
+            this.tabHistory.Size = new System.Drawing.Size(402, 248);
             this.tabHistory.TabIndex = 1;
             this.tabHistory.Text = "History";
             this.tabHistory.UseVisualStyleBackColor = true;
@@ -98,7 +113,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(362, 242);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(394, 242);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // gBoxResponse
@@ -107,7 +122,7 @@
             this.gBoxResponse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gBoxResponse.Location = new System.Drawing.Point(3, 3);
             this.gBoxResponse.Name = "gBoxResponse";
-            this.gBoxResponse.Size = new System.Drawing.Size(356, 203);
+            this.gBoxResponse.Size = new System.Drawing.Size(388, 203);
             this.gBoxResponse.TabIndex = 2;
             this.gBoxResponse.TabStop = false;
             this.gBoxResponse.Text = "Response Preview";
@@ -118,7 +133,7 @@
             this.rTxtHistoryResponse.Location = new System.Drawing.Point(3, 18);
             this.rTxtHistoryResponse.Name = "rTxtHistoryResponse";
             this.rTxtHistoryResponse.ReadOnly = true;
-            this.rTxtHistoryResponse.Size = new System.Drawing.Size(350, 182);
+            this.rTxtHistoryResponse.Size = new System.Drawing.Size(382, 182);
             this.rTxtHistoryResponse.TabIndex = 1;
             this.rTxtHistoryResponse.Text = "";
             // 
@@ -128,7 +143,7 @@
             this.panel2.Controls.Add(this.btnHistoryGet);
             this.panel2.Controls.Add(this.btnHistorySave);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(126, 209);
+            this.panel2.Location = new System.Drawing.Point(158, 209);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(236, 33);
@@ -153,6 +168,76 @@
             this.btnHistorySave.Text = "&Save";
             this.btnHistorySave.UseVisualStyleBackColor = true;
             this.btnHistorySave.Click += new System.EventHandler(this.btnHistorySave_Click);
+            // 
+            // tabConfiguration
+            // 
+            this.tabConfiguration.Controls.Add(this.panel1);
+            this.tabConfiguration.Controls.Add(this.gBoxConfigurationConfigureDevice);
+            this.tabConfiguration.Location = new System.Drawing.Point(4, 23);
+            this.tabConfiguration.Name = "tabConfiguration";
+            this.tabConfiguration.Padding = new System.Windows.Forms.Padding(3);
+            this.tabConfiguration.Size = new System.Drawing.Size(370, 248);
+            this.tabConfiguration.TabIndex = 2;
+            this.tabConfiguration.Text = "Configuration";
+            this.tabConfiguration.UseVisualStyleBackColor = true;
+            // 
+            // gBoxConfigurationConfigureDevice
+            // 
+            this.gBoxConfigurationConfigureDevice.Controls.Add(this.btnConfigurationConfigure);
+            this.gBoxConfigurationConfigureDevice.Controls.Add(this.lblConfigurationName);
+            this.gBoxConfigurationConfigureDevice.Controls.Add(this.txtConfigurationName);
+            this.gBoxConfigurationConfigureDevice.Location = new System.Drawing.Point(6, 6);
+            this.gBoxConfigurationConfigureDevice.Name = "gBoxConfigurationConfigureDevice";
+            this.gBoxConfigurationConfigureDevice.Size = new System.Drawing.Size(189, 98);
+            this.gBoxConfigurationConfigureDevice.TabIndex = 2;
+            this.gBoxConfigurationConfigureDevice.TabStop = false;
+            this.gBoxConfigurationConfigureDevice.Text = "Configure Device";
+            // 
+            // btnConfigurationConfigure
+            // 
+            this.btnConfigurationConfigure.Location = new System.Drawing.Point(6, 69);
+            this.btnConfigurationConfigure.Name = "btnConfigurationConfigure";
+            this.btnConfigurationConfigure.Size = new System.Drawing.Size(75, 23);
+            this.btnConfigurationConfigure.TabIndex = 2;
+            this.btnConfigurationConfigure.Text = "Save";
+            this.btnConfigurationConfigure.UseVisualStyleBackColor = true;
+            this.btnConfigurationConfigure.Click += new System.EventHandler(this.btnConfigurationConfigure_Click);
+            // 
+            // lblConfigurationName
+            // 
+            this.lblConfigurationName.AutoSize = true;
+            this.lblConfigurationName.Location = new System.Drawing.Point(6, 35);
+            this.lblConfigurationName.Name = "lblConfigurationName";
+            this.lblConfigurationName.Size = new System.Drawing.Size(42, 14);
+            this.lblConfigurationName.TabIndex = 1;
+            this.lblConfigurationName.Text = "Name:";
+            // 
+            // txtConfigurationName
+            // 
+            this.txtConfigurationName.Location = new System.Drawing.Point(54, 32);
+            this.txtConfigurationName.Name = "txtConfigurationName";
+            this.txtConfigurationName.Size = new System.Drawing.Size(121, 22);
+            this.txtConfigurationName.TabIndex = 0;
+            // 
+            // gBoxConfigurationRemoveAllData
+            // 
+            this.gBoxConfigurationRemoveAllData.Controls.Add(this.btnConfigurationReset);
+            this.gBoxConfigurationRemoveAllData.Location = new System.Drawing.Point(70, 6);
+            this.gBoxConfigurationRemoveAllData.Name = "gBoxConfigurationRemoveAllData";
+            this.gBoxConfigurationRemoveAllData.Size = new System.Drawing.Size(127, 54);
+            this.gBoxConfigurationRemoveAllData.TabIndex = 1;
+            this.gBoxConfigurationRemoveAllData.TabStop = false;
+            this.gBoxConfigurationRemoveAllData.Text = "Remove All Data";
+            // 
+            // btnConfigurationReset
+            // 
+            this.btnConfigurationReset.Location = new System.Drawing.Point(22, 21);
+            this.btnConfigurationReset.Name = "btnConfigurationReset";
+            this.btnConfigurationReset.Size = new System.Drawing.Size(87, 23);
+            this.btnConfigurationReset.TabIndex = 0;
+            this.btnConfigurationReset.Text = "Reset";
+            this.btnConfigurationReset.UseVisualStyleBackColor = true;
+            this.btnConfigurationReset.Click += new System.EventHandler(this.btnConfigurationReset_Click);
             // 
             // progressBarConnection
             // 
@@ -252,6 +337,24 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(386, 311);
             this.tableLayoutPanel1.TabIndex = 10;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.panel4);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(3, 182);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(364, 63);
+            this.panel1.TabIndex = 3;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.gBoxConfigurationRemoveAllData);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel4.Location = new System.Drawing.Point(164, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(200, 63);
+            this.panel4.TabIndex = 0;
+            // 
             // SchoolBuddyMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -272,12 +375,18 @@
             this.tableLayoutPanel3.PerformLayout();
             this.gBoxResponse.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.tabConfiguration.ResumeLayout(false);
+            this.gBoxConfigurationConfigureDevice.ResumeLayout(false);
+            this.gBoxConfigurationConfigureDevice.PerformLayout();
+            this.gBoxConfigurationRemoveAllData.ResumeLayout(false);
             this.toolStripSchoolBuddyMain.ResumeLayout(false);
             this.toolStripSchoolBuddyMain.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -303,6 +412,15 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStripMenuItem portToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox toolStripCbPorts;
+        private System.Windows.Forms.TabPage tabConfiguration;
+        private System.Windows.Forms.Button btnConfigurationReset;
+        private System.Windows.Forms.GroupBox gBoxConfigurationConfigureDevice;
+        private System.Windows.Forms.Label lblConfigurationName;
+        private System.Windows.Forms.TextBox txtConfigurationName;
+        private System.Windows.Forms.GroupBox gBoxConfigurationRemoveAllData;
+        private System.Windows.Forms.Button btnConfigurationConfigure;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel4;
     }
 }
 
