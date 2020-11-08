@@ -8,3 +8,12 @@ C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-bu
 C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\obj\Debug\school-buddy-desktop.exe
 C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\obj\Debug\school-buddy-desktop.pdb
 C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\obj\Debug\school_buddy_desktop.SchoolBuddyMain.resources
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\bin\Debug\CsvHelper.dll
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\bin\Debug\CsvHelper.xml
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Daniele Ognibene\Documents\PersonalProjects\ESP32\SchoolBuddy\school-buddy-desktop\obj\Debug\school-buddy-desktop.csproj.CopyComplete
