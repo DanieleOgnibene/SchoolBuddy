@@ -29,15 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SchoolBuddyMain));
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
             this.tabControlPages = new System.Windows.Forms.TabControl();
-            this.tabHistory = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.gBoxResponse = new System.Windows.Forms.GroupBox();
-            this.rTxtHistoryResponse = new System.Windows.Forms.RichTextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnHistoryGet = new System.Windows.Forms.Button();
-            this.btnHistorySave = new System.Windows.Forms.Button();
+            this.tabAbout = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tBoxAboutVersion = new System.Windows.Forms.TextBox();
+            this.tBoxAboutName = new System.Windows.Forms.TextBox();
+            this.tBoxAboutMac = new System.Windows.Forms.TextBox();
             this.tabConfiguration = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -47,6 +50,13 @@
             this.btnConfigurationConfigure = new System.Windows.Forms.Button();
             this.lblConfigurationName = new System.Windows.Forms.Label();
             this.tBoxConfigurationName = new System.Windows.Forms.TextBox();
+            this.tabHistory = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.gBoxResponse = new System.Windows.Forms.GroupBox();
+            this.rTxtHistoryResponse = new System.Windows.Forms.RichTextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnHistoryGet = new System.Windows.Forms.Button();
+            this.btnHistorySave = new System.Windows.Forms.Button();
             this.progressBarConnection = new System.Windows.Forms.ProgressBar();
             this.toolStripSchoolBuddyMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,31 +68,22 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tabAbout = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tBoxAboutMac = new System.Windows.Forms.TextBox();
-            this.tBoxAboutName = new System.Windows.Forms.TextBox();
-            this.tBoxAboutVersion = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControlPages.SuspendLayout();
-            this.tabHistory.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
-            this.gBoxResponse.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.tabAbout.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.tabConfiguration.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.gBoxConfigurationRemoveAllData.SuspendLayout();
             this.gBoxConfigurationConfigureDevice.SuspendLayout();
+            this.tabHistory.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.gBoxResponse.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.toolStripSchoolBuddyMain.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tabAbout.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // serialPort
@@ -102,85 +103,100 @@
             this.tabControlPages.Size = new System.Drawing.Size(463, 296);
             this.tabControlPages.TabIndex = 0;
             // 
-            // tabHistory
+            // tabAbout
             // 
-            this.tabHistory.Controls.Add(this.tableLayoutPanel3);
-            this.tabHistory.Location = new System.Drawing.Point(4, 23);
-            this.tabHistory.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabHistory.Name = "tabHistory";
-            this.tabHistory.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabHistory.Size = new System.Drawing.Size(411, 258);
-            this.tabHistory.TabIndex = 1;
-            this.tabHistory.Text = "History";
-            this.tabHistory.UseVisualStyleBackColor = true;
+            this.tabAbout.Controls.Add(this.tableLayoutPanel2);
+            this.tabAbout.Location = new System.Drawing.Point(4, 23);
+            this.tabAbout.Name = "tabAbout";
+            this.tabAbout.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAbout.Size = new System.Drawing.Size(455, 269);
+            this.tabAbout.TabIndex = 3;
+            this.tabAbout.Text = "About";
+            this.tabAbout.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel3
+            // tableLayoutPanel2
             // 
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.gBoxResponse, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.panel2, 0, 1);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 3);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(403, 252);
-            this.tableLayoutPanel3.TabIndex = 4;
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.99999F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.00001F));
+            this.tableLayoutPanel2.Controls.Add(this.groupBox1, 1, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(449, 263);
+            this.tableLayoutPanel2.TabIndex = 1;
             // 
-            // gBoxResponse
+            // groupBox1
             // 
-            this.gBoxResponse.Controls.Add(this.rTxtHistoryResponse);
-            this.gBoxResponse.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gBoxResponse.Location = new System.Drawing.Point(3, 3);
-            this.gBoxResponse.Name = "gBoxResponse";
-            this.gBoxResponse.Size = new System.Drawing.Size(397, 213);
-            this.gBoxResponse.TabIndex = 2;
-            this.gBoxResponse.TabStop = false;
-            this.gBoxResponse.Text = "Preview";
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.tBoxAboutVersion);
+            this.groupBox1.Controls.Add(this.tBoxAboutName);
+            this.groupBox1.Controls.Add(this.tBoxAboutMac);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(106, 69);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(235, 125);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Connected Device";
             // 
-            // rTxtHistoryResponse
+            // label3
             // 
-            this.rTxtHistoryResponse.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rTxtHistoryResponse.Location = new System.Drawing.Point(3, 18);
-            this.rTxtHistoryResponse.Name = "rTxtHistoryResponse";
-            this.rTxtHistoryResponse.ReadOnly = true;
-            this.rTxtHistoryResponse.Size = new System.Drawing.Size(391, 192);
-            this.rTxtHistoryResponse.TabIndex = 1;
-            this.rTxtHistoryResponse.Text = "";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 90);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(51, 14);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Version:";
             // 
-            // panel2
+            // label2
             // 
-            this.panel2.AutoSize = true;
-            this.panel2.Controls.Add(this.btnHistoryGet);
-            this.panel2.Controls.Add(this.btnHistorySave);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(167, 219);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(236, 33);
-            this.panel2.TabIndex = 3;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 62);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 14);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Name:";
             // 
-            // btnHistoryGet
+            // label1
             // 
-            this.btnHistoryGet.Location = new System.Drawing.Point(23, 3);
-            this.btnHistoryGet.Name = "btnHistoryGet";
-            this.btnHistoryGet.Size = new System.Drawing.Size(102, 27);
-            this.btnHistoryGet.TabIndex = 7;
-            this.btnHistoryGet.Text = "&Get";
-            this.btnHistoryGet.UseVisualStyleBackColor = true;
-            this.btnHistoryGet.Click += new System.EventHandler(this.btnHistoryGet_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 34);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(33, 14);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "MAC:";
             // 
-            // btnHistorySave
+            // tBoxAboutVersion
             // 
-            this.btnHistorySave.Location = new System.Drawing.Point(131, 3);
-            this.btnHistorySave.Name = "btnHistorySave";
-            this.btnHistorySave.Size = new System.Drawing.Size(102, 27);
-            this.btnHistorySave.TabIndex = 8;
-            this.btnHistorySave.Text = "&Save";
-            this.btnHistorySave.UseVisualStyleBackColor = true;
-            this.btnHistorySave.Click += new System.EventHandler(this.btnHistorySave_Click);
+            this.tBoxAboutVersion.Location = new System.Drawing.Point(63, 87);
+            this.tBoxAboutVersion.Name = "tBoxAboutVersion";
+            this.tBoxAboutVersion.ReadOnly = true;
+            this.tBoxAboutVersion.Size = new System.Drawing.Size(35, 22);
+            this.tBoxAboutVersion.TabIndex = 2;
+            // 
+            // tBoxAboutName
+            // 
+            this.tBoxAboutName.Location = new System.Drawing.Point(63, 59);
+            this.tBoxAboutName.Name = "tBoxAboutName";
+            this.tBoxAboutName.ReadOnly = true;
+            this.tBoxAboutName.Size = new System.Drawing.Size(159, 22);
+            this.tBoxAboutName.TabIndex = 1;
+            // 
+            // tBoxAboutMac
+            // 
+            this.tBoxAboutMac.Location = new System.Drawing.Point(63, 31);
+            this.tBoxAboutMac.Name = "tBoxAboutMac";
+            this.tBoxAboutMac.ReadOnly = true;
+            this.tBoxAboutMac.Size = new System.Drawing.Size(159, 22);
+            this.tBoxAboutMac.TabIndex = 0;
             // 
             // tabConfiguration
             // 
@@ -189,7 +205,7 @@
             this.tabConfiguration.Location = new System.Drawing.Point(4, 23);
             this.tabConfiguration.Name = "tabConfiguration";
             this.tabConfiguration.Padding = new System.Windows.Forms.Padding(3);
-            this.tabConfiguration.Size = new System.Drawing.Size(411, 258);
+            this.tabConfiguration.Size = new System.Drawing.Size(455, 269);
             this.tabConfiguration.TabIndex = 2;
             this.tabConfiguration.Text = "Configuration";
             this.tabConfiguration.UseVisualStyleBackColor = true;
@@ -198,16 +214,16 @@
             // 
             this.panel1.Controls.Add(this.panel4);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(3, 192);
+            this.panel1.Location = new System.Drawing.Point(3, 203);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(405, 63);
+            this.panel1.Size = new System.Drawing.Size(449, 63);
             this.panel1.TabIndex = 3;
             // 
             // panel4
             // 
             this.panel4.Controls.Add(this.gBoxConfigurationRemoveAllData);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(205, 0);
+            this.panel4.Location = new System.Drawing.Point(249, 0);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(200, 63);
             this.panel4.TabIndex = 0;
@@ -269,6 +285,86 @@
             this.tBoxConfigurationName.Name = "tBoxConfigurationName";
             this.tBoxConfigurationName.Size = new System.Drawing.Size(121, 22);
             this.tBoxConfigurationName.TabIndex = 0;
+            // 
+            // tabHistory
+            // 
+            this.tabHistory.Controls.Add(this.tableLayoutPanel3);
+            this.tabHistory.Location = new System.Drawing.Point(4, 23);
+            this.tabHistory.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabHistory.Name = "tabHistory";
+            this.tabHistory.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabHistory.Size = new System.Drawing.Size(455, 269);
+            this.tabHistory.TabIndex = 1;
+            this.tabHistory.Text = "History";
+            this.tabHistory.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.gBoxResponse, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.panel2, 0, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(447, 263);
+            this.tableLayoutPanel3.TabIndex = 4;
+            // 
+            // gBoxResponse
+            // 
+            this.gBoxResponse.Controls.Add(this.rTxtHistoryResponse);
+            this.gBoxResponse.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gBoxResponse.Location = new System.Drawing.Point(3, 3);
+            this.gBoxResponse.Name = "gBoxResponse";
+            this.gBoxResponse.Size = new System.Drawing.Size(441, 224);
+            this.gBoxResponse.TabIndex = 2;
+            this.gBoxResponse.TabStop = false;
+            this.gBoxResponse.Text = "Preview";
+            // 
+            // rTxtHistoryResponse
+            // 
+            this.rTxtHistoryResponse.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rTxtHistoryResponse.Location = new System.Drawing.Point(3, 18);
+            this.rTxtHistoryResponse.Name = "rTxtHistoryResponse";
+            this.rTxtHistoryResponse.ReadOnly = true;
+            this.rTxtHistoryResponse.Size = new System.Drawing.Size(435, 203);
+            this.rTxtHistoryResponse.TabIndex = 1;
+            this.rTxtHistoryResponse.Text = "";
+            // 
+            // panel2
+            // 
+            this.panel2.AutoSize = true;
+            this.panel2.Controls.Add(this.btnHistoryGet);
+            this.panel2.Controls.Add(this.btnHistorySave);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel2.Location = new System.Drawing.Point(211, 230);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(236, 33);
+            this.panel2.TabIndex = 3;
+            // 
+            // btnHistoryGet
+            // 
+            this.btnHistoryGet.Location = new System.Drawing.Point(23, 3);
+            this.btnHistoryGet.Name = "btnHistoryGet";
+            this.btnHistoryGet.Size = new System.Drawing.Size(102, 27);
+            this.btnHistoryGet.TabIndex = 7;
+            this.btnHistoryGet.Text = "&Get";
+            this.btnHistoryGet.UseVisualStyleBackColor = true;
+            this.btnHistoryGet.Click += new System.EventHandler(this.btnHistoryGet_Click);
+            // 
+            // btnHistorySave
+            // 
+            this.btnHistorySave.Location = new System.Drawing.Point(131, 3);
+            this.btnHistorySave.Name = "btnHistorySave";
+            this.btnHistorySave.Size = new System.Drawing.Size(102, 27);
+            this.btnHistorySave.TabIndex = 8;
+            this.btnHistorySave.Text = "&Save";
+            this.btnHistorySave.UseVisualStyleBackColor = true;
+            this.btnHistorySave.Click += new System.EventHandler(this.btnHistorySave_Click);
             // 
             // progressBarConnection
             // 
@@ -368,101 +464,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(471, 332);
             this.tableLayoutPanel1.TabIndex = 10;
             // 
-            // tabAbout
-            // 
-            this.tabAbout.Controls.Add(this.tableLayoutPanel2);
-            this.tabAbout.Location = new System.Drawing.Point(4, 23);
-            this.tabAbout.Name = "tabAbout";
-            this.tabAbout.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAbout.Size = new System.Drawing.Size(455, 269);
-            this.tabAbout.TabIndex = 3;
-            this.tabAbout.Text = "About";
-            this.tabAbout.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.tBoxAboutVersion);
-            this.groupBox1.Controls.Add(this.tBoxAboutName);
-            this.groupBox1.Controls.Add(this.tBoxAboutMac);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(106, 69);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(235, 125);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Connected Device";
-            // 
-            // tBoxAboutMac
-            // 
-            this.tBoxAboutMac.Location = new System.Drawing.Point(63, 31);
-            this.tBoxAboutMac.Name = "tBoxAboutMac";
-            this.tBoxAboutMac.ReadOnly = true;
-            this.tBoxAboutMac.Size = new System.Drawing.Size(159, 22);
-            this.tBoxAboutMac.TabIndex = 0;
-            // 
-            // tBoxAboutName
-            // 
-            this.tBoxAboutName.Location = new System.Drawing.Point(63, 59);
-            this.tBoxAboutName.Name = "tBoxAboutName";
-            this.tBoxAboutName.ReadOnly = true;
-            this.tBoxAboutName.Size = new System.Drawing.Size(159, 22);
-            this.tBoxAboutName.TabIndex = 1;
-            // 
-            // tBoxAboutVersion
-            // 
-            this.tBoxAboutVersion.Location = new System.Drawing.Point(63, 87);
-            this.tBoxAboutVersion.Name = "tBoxAboutVersion";
-            this.tBoxAboutVersion.ReadOnly = true;
-            this.tBoxAboutVersion.Size = new System.Drawing.Size(35, 22);
-            this.tBoxAboutVersion.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 34);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(33, 14);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "MAC:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 62);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 14);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Name:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 90);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 14);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Version:";
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.99999F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.00001F));
-            this.tableLayoutPanel2.Controls.Add(this.groupBox1, 1, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(449, 263);
-            this.tableLayoutPanel2.TabIndex = 1;
-            // 
             // SchoolBuddyMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -470,6 +471,7 @@
             this.ClientSize = new System.Drawing.Size(471, 332);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.toolStripSchoolBuddyMain;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MinimumSize = new System.Drawing.Size(402, 350);
@@ -478,27 +480,27 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SchoolBuddyMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControlPages.ResumeLayout(false);
-            this.tabHistory.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
-            this.gBoxResponse.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
+            this.tabAbout.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tabConfiguration.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.gBoxConfigurationRemoveAllData.ResumeLayout(false);
             this.gBoxConfigurationConfigureDevice.ResumeLayout(false);
             this.gBoxConfigurationConfigureDevice.PerformLayout();
+            this.tabHistory.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
+            this.gBoxResponse.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.toolStripSchoolBuddyMain.ResumeLayout(false);
             this.toolStripSchoolBuddyMain.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.tabAbout.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
