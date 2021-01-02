@@ -181,19 +181,7 @@ namespace school_buddy_desktop
             {
                 var currentFile = files[fileIndex];
                 var addressesWithTimeStamp = currentFile.Split('\n');
-                for (var addressWithTimeStampIndex = addressesWithTimeStamp.Length - 1; addressWithTimeStampIndex >= 0; addressWithTimeStampIndex--)
-                {
-                    var addressWithTimeStamp = addressesWithTimeStamp[addressWithTimeStampIndex];
-                    if (addressWithTimeStamp != "")
-                    {
-                        var parameters = addressWithTimeStamp.Split(';');
-                        var address = parameters[0];
-                        var timeStamp = Int32.Parse(parameters[1]);
-                        var localDateTime = UnixTimeStampToLocalDateTime(timeStamp);
-                        var newLine = string.Format("{0};{1}", address, localDateTime) + '\n';
-                        rTxtHistoryResponse.Text += newLine;
-                    }
-                }
+                rTxtHistoryResponse.Text += GetNormalizedHistoryFile(addressesWithTimeStamp);
             }
             if (response.Length > 0)
             {
@@ -205,6 +193,29 @@ namespace school_buddy_desktop
                 MessageBox.Show("This device's history is empty.", "History", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             _waitingSerialResponse = false;
+        }
+
+        private string GetNormalizedHistoryFile(string[] addressesWithTimeStamp)
+        {
+            var normalizedHistoryFile = "";
+            for (var addressWithTimeStampIndex = addressesWithTimeStamp.Length - 1; addressWithTimeStampIndex >= 0; addressWithTimeStampIndex--)
+            {
+                var addressWithTimeStamp = addressesWithTimeStamp[addressWithTimeStampIndex];
+                if (addressWithTimeStamp != "")
+                {
+                    var parameters = addressWithTimeStamp.Split(';');
+                    var address = parameters[0];
+                    var timeStamp = Int32.Parse(parameters[1]);
+                    var newerThan15Days = ((DateTimeOffset)DateTime.Today.AddDays(-15)).ToUnixTimeSeconds() <= timeStamp;
+                    if (newerThan15Days)
+                    {
+                        var localDateTime = UnixTimeStampToLocalDateTime(timeStamp);
+                        var newLine = string.Format("{0};{1}", address, localDateTime) + '\n';
+                        normalizedHistoryFile += newLine;
+                    }
+                }
+            }
+            return normalizedHistoryFile;
         }
 
         private void SerialGetDeviceInfoComplete(string response)
