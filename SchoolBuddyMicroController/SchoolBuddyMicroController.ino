@@ -23,7 +23,6 @@ void setup() {
   InitSPIFFS();
   InitProximitySensorTask();
   InitSerialCommunicationTask();
-  RunHistoryFileContentCleanup();
 }
 
 void loop() {}
