@@ -20,6 +20,7 @@ namespace school_buddy_desktop
 
         private readonly char END_COMMAND_CHAR = '#';
         private readonly char COMMAND_PARAMTERS_SEPARATOR = ';';
+        private readonly string GET_HISTORY_END_FILE_SEPARATOR = "END_FILE";
         private readonly string COMMAND_OK_RESPONSE = "OK";
         private readonly string GET_HISTORY_COMMAND = "GET_HISTORY_";
         private readonly string GET_DEVICE_INFO_COMMAND = "GET_DEVICE_INFO_";
@@ -32,7 +33,8 @@ namespace school_buddy_desktop
         #endregion
 
         private string _serialData = "";
-        private bool waitingSerialResponse = false;
+        private bool _waitingSerialResponse = false;
+        private string _lastDeviceMAC = "";
 
         public SchoolBuddyMain()
         {
@@ -105,7 +107,7 @@ namespace school_buddy_desktop
             _serialData = "";
             serialPort.Write(command + END_COMMAND_CHAR);
             SetFormStateConnectedWaitingSerialResponse();
-            waitingSerialResponse = true;
+            _waitingSerialResponse = true;
         }
 
         private void SendInitDeviceSerialCommand()
@@ -164,7 +166,7 @@ namespace school_buddy_desktop
                 var response = GetSerialResponseFromSerialData(INIT_DEVICE_COMMAND);
                 SerialInitDeviceComplete(response);
             }
-            if (!waitingSerialResponse)
+            if (!_waitingSerialResponse)
             {
                 _serialData = "";
                 SetFormStateConnectedReady();
@@ -173,17 +175,36 @@ namespace school_buddy_desktop
 
         private void SerialGetHistoryComplete(string response)
         {
-            rTxtHistoryResponse.Text = response;
+            rTxtHistoryResponse.Text = "";
+            var files = response.Split(new string[] { GET_HISTORY_END_FILE_SEPARATOR }, StringSplitOptions.None);
+            for (var fileIndex = 0; fileIndex < files.Length; fileIndex++)
+            {
+                var currentFile = files[fileIndex];
+                var addressesWithTimeStamp = currentFile.Split('\n');
+                for (var addressWithTimeStampIndex = addressesWithTimeStamp.Length - 1; addressWithTimeStampIndex >= 0; addressWithTimeStampIndex--)
+                {
+                    var addressWithTimeStamp = addressesWithTimeStamp[addressWithTimeStampIndex];
+                    if (addressWithTimeStamp != "")
+                    {
+                        var parameters = addressWithTimeStamp.Split(';');
+                        var address = parameters[0];
+                        var timeStamp = Int32.Parse(parameters[1]);
+                        var localDateTime = UnixTimeStampToLocalDateTime(timeStamp);
+                        var newLine = string.Format("{0};{1}", address, localDateTime) + '\n';
+                        rTxtHistoryResponse.Text += newLine;
+                    }
+                }
+            }
             if (response.Length > 0)
             {
                 btnHistorySave.Enabled = true;
-                SaveHistoryReceived();
+                SaveReceivedHistory();
             }
             else
             {
                 MessageBox.Show("This device's history is empty.", "History", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            waitingSerialResponse = false;
+            _waitingSerialResponse = false;
         }
 
         private void SerialGetDeviceInfoComplete(string response)
@@ -192,12 +213,13 @@ namespace school_buddy_desktop
             var deviceName = deviceInfos[0];
             var deviceMAC = deviceInfos[1];
             var titleDeviceInfo = (deviceName != "" ? (" | " + deviceName) : "") + " | " + deviceMAC;
+            _lastDeviceMAC = deviceMAC;
             ActiveForm.Text = WINDOW_DEFAULT_TITLE + titleDeviceInfo;
             tBoxAboutMac.Text = deviceMAC;
             tBoxAboutName.Text = deviceName;
             tBoxConfigurationName.Text = deviceName;
             tBoxAboutVersion.Text = "1.0.0";
-            waitingSerialResponse = false;
+            _waitingSerialResponse = false;
         }
 
         private void SerialResetDeviceComplete(string response)
@@ -218,7 +240,7 @@ namespace school_buddy_desktop
             }
         }
 
-        private void SaveHistoryReceived()
+        private void SaveReceivedHistory()
         {
             var saveFilePath = GetSaveHistoryFilePath();
             if (saveFilePath != "")
@@ -230,7 +252,8 @@ namespace school_buddy_desktop
         private string GetSaveHistoryFilePath()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.FileName = "1a-e8-de-a3-93-0c  @" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm");
+            var normalizedDeviceMAC = _lastDeviceMAC.Replace(':', '-');
+            saveFileDialog.FileName = normalizedDeviceMAC + "  @" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm");
             saveFileDialog.Filter = "Text File|*.csv";
             saveFileDialog.ValidateNames = true;
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -254,13 +277,7 @@ namespace school_buddy_desktop
                 {
                     if (line != "")
                     {
-                        var parameters = line.Split(';');
-                        var address = parameters[0];
-                        Debug.WriteLine(parameters[1]);
-                        Debug.WriteLine(Int32.Parse(parameters[1]));
-                        var localDateTime = UnixTimeStampToLocalDateTime(Int32.Parse(parameters[1]));
-                        var newLine = string.Format("{0};{1}", address, localDateTime);
-                        streamWriter.WriteLine(newLine);
+                        streamWriter.WriteLine(line);
                         streamWriter.Flush();
                     }
                 }
@@ -408,7 +425,7 @@ namespace school_buddy_desktop
 
         private void btnHistorySave_Click(object sender, EventArgs e)
         {
-            SaveHistoryReceived();
+            SaveReceivedHistory();
         }
 
         private void toolStripCbPorts_Click(object sender, EventArgs e)

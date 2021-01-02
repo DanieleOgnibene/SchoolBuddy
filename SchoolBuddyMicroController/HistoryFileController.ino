@@ -1,45 +1,46 @@
-const String HISTORY_FILE_PATH = "/history.txt";
-
-void RemoveHistoryFile() {
-  SPIFFS.remove(HISTORY_FILE_PATH);
+void RemoveHistoryFiles() {
+  for (int fileIndex = 0; fileIndex < 15; fileIndex++) {
+    SPIFFS.remove(GetHistoryFilePath(fileIndex));
+  }
 }
 
-void UpdateHistoryFileContent(String sensorAddress, int timeStamp) {
-  const String currentContent = GetHistoryFileContent();
-  const String newContent = currentContent + sensorAddress + ';' + timeStamp + '\n';
-  File file = SPIFFS.open(HISTORY_FILE_PATH, FILE_WRITE);
+void UpdateHistoryFileContent(String sensorAddressesWithTimeStamp[], int sensorAddressesWithTimeStampLength) {
+  String newContent = "";
+  for (int i = 0; i < sensorAddressesWithTimeStampLength; i++) {
+    newContent += sensorAddressesWithTimeStamp[i] + '\n';
+  }
+  File file = SPIFFS.open(GetHistoryFilePath(0), FILE_APPEND);
   file.print(newContent);
   file.close();
 }
 
-String GetHistoryFileContent() {
-  File file = SPIFFS.open(HISTORY_FILE_PATH);
+String GetCurrentHistoryFileContent() {
+  return GetHistoryFileContent(0);
+}
+
+String GetHistoryFileContent(int fileIndex) {
+  const String historyFilePath = GetHistoryFilePath(fileIndex);
   String currentContent = "";
-  while (file.available()) {
-    const char currentChar = file.read();
-    currentContent += currentChar;
+  if (SPIFFS.exists(historyFilePath) != 0) {
+    File file = SPIFFS.open(historyFilePath);
+    while (file.available()) {
+      const char currentChar = file.read();
+      currentContent += currentChar;
+    }
+    file.close();
   }
-  file.close();
   return currentContent;
 }
 
-void RunHistoryFileContentCleanup(int minimumTimeStamp) {
-  File file = SPIFFS.open(HISTORY_FILE_PATH);
-  String currentContent = "";
-  String currentLine = "";
-  while (file.available()) {
-    const char currentChar = file.read();
-    if (currentChar == '\n') {
-      int separatorIndex = currentLine.indexOf(';');
-      int timeStamp = currentLine.substring(separatorIndex + 1).toInt();
-      if (timeStamp > minimumTimeStamp) {
-        currentContent += currentLine + currentChar;
-      } else {
-        currentLine = "";
-      }
-    } else {
-      currentLine += currentChar;
-    }
+void RunHistoryFileContentCleanup() {
+  SPIFFS.remove(GetHistoryFilePath(14));
+  for (int fileIndex = 13; fileIndex >= 0; fileIndex--) {
+    SPIFFS.rename(GetHistoryFilePath(fileIndex), GetHistoryFilePath(fileIndex + 1));
   }
-  file.close();
+}
+
+String GetHistoryFilePath(int fileIndex) {
+  const String baseHistoryPath = "/history_";
+  const String fileExtension = ".txt";
+  return baseHistoryPath + fileIndex + fileExtension;
 }

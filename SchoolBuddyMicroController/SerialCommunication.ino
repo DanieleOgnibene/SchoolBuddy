@@ -38,7 +38,9 @@ void ReadSerialInput() {
 
 void ReadSerialCommand() {
   if (!isHandlingProximitySensorResults && serialCommandReceived) {
+    isHandlingSerialCommunication = true;
     HandleSerialCommand();
+    isHandlingSerialCommunication = false;
   }
 }
 
@@ -61,7 +63,10 @@ void HandleSerialCommand() {
 
 void HandleGetHistoryCommand() {
   Serial.print(GET_HISTORY_COMMAND);
-  Serial.print(GetHistoryFileContent());
+  for (int fileIndex = 0; fileIndex < 15; fileIndex++) {
+    Serial.print(GetHistoryFileContent(fileIndex));
+    Serial.print("END_FILE");
+  }
   Serial.print(END_COMMAND_CHAR);
 }
 
@@ -89,7 +94,7 @@ void HandleGetDeviceNameCommand() {
 }
 
 void ResetDevice() {
-  RemoveHistoryFile();
+  RemoveHistoryFiles();
   RemoveDeviceNameFile();
   RemoveHistoryCleanupTimeStampFile();
 }

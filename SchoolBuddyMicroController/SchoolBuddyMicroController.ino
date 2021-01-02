@@ -15,13 +15,15 @@ TaskHandle_t SerialCommunicationTask;
 
 RTC_DS3231 rtc;
 bool isHandlingProximitySensorResults = false;
+bool isHandlingSerialCommunication = false;
 
 void setup() {
-  InitRTC();
   InitSerial();
+  InitRTC();
   InitSPIFFS();
   InitProximitySensorTask();
   InitSerialCommunicationTask();
+  RunHistoryFileContentCleanup();
 }
 
 void loop() {}
