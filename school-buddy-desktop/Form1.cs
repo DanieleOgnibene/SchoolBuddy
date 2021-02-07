@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Cryptography;
+
 
 namespace school_buddy_desktop
 {
@@ -18,7 +20,7 @@ namespace school_buddy_desktop
     {
         #region CONSTANTS
 
-        private readonly char END_COMMAND_CHAR = '#';
+        private readonly string END_COMMAND = "END_COMMAND";
         private readonly char COMMAND_PARAMTERS_SEPARATOR = ';';
         private readonly string GET_HISTORY_END_FILE_SEPARATOR = "END_FILE";
         private readonly string COMMAND_OK_RESPONSE = "OK";
@@ -26,6 +28,8 @@ namespace school_buddy_desktop
         private readonly string GET_DEVICE_INFO_COMMAND = "GET_DEVICE_INFO_";
         private readonly string RESET_DEVICE_COMMAND = "RESET_DEVICE_";
         private readonly string INIT_DEVICE_COMMAND = "INIT_DEVICE_";
+        private readonly string HISTORY_RECORD_END_LINE = "END_LINE";
+        private readonly string HISTORY_RECORD_PARAMETER_SEPARATOR = "SEPARATOR";
 
         private readonly string WINDOW_DEFAULT_TITLE = "School Buddy";
         private readonly string PORT_TOOL_STRIP_DEFAULT_TEXT = "Port";
@@ -45,8 +49,6 @@ namespace school_buddy_desktop
 
         private void InitFormState()
         {
-            InitToolStripComPorts();
-
             SetDefaultPortToolStripText();
 
             connectToolStripMenuItem.Enabled = false;
@@ -57,6 +59,8 @@ namespace school_buddy_desktop
 
             btnConfigurationConfigure.Enabled = false;
             btnConfigurationReset.Enabled = false;
+
+            InitToolStripComPorts();
         }
 
         private void InitToolStripComPorts()
@@ -67,6 +71,11 @@ namespace school_buddy_desktop
             if (!serialPortsNames.Contains(toolStripCbPorts.Text))
             {
                 toolStripCbPorts.Text = "";
+            }
+            if (serialPortsNames.Length == 1)
+            {
+                toolStripCbPorts.Text = serialPortsNames[0];
+                UpdateSelectedPortName();
             }
         }
 
@@ -105,7 +114,7 @@ namespace school_buddy_desktop
         private void SendSerialCommand(string command)
         {
             _serialData = "";
-            serialPort.Write(command + END_COMMAND_CHAR);
+            serialPort.Write(command + END_COMMAND);
             SetFormStateConnectedWaitingSerialResponse();
             _waitingSerialResponse = true;
         }
@@ -113,9 +122,7 @@ namespace school_buddy_desktop
         private void SendInitDeviceSerialCommand()
         {
             var timeStamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            Debug.WriteLine(timeStamp);
             var command = INIT_DEVICE_COMMAND + timeStamp + COMMAND_PARAMTERS_SEPARATOR + tBoxConfigurationName.Text;
-            Debug.WriteLine(command);
             SendSerialCommand(command);
         }
 
@@ -138,7 +145,7 @@ namespace school_buddy_desktop
         {
             var newData = serialPort.ReadExisting();
             _serialData += newData;
-            if (newData.Contains(END_COMMAND_CHAR))
+            if (_serialData.EndsWith(END_COMMAND))
             {
                 Invoke(new EventHandler(SerialDataReceivedCompleteEventHandler));
             }
@@ -180,7 +187,11 @@ namespace school_buddy_desktop
             for (var fileIndex = 0; fileIndex < files.Length; fileIndex++)
             {
                 var currentFile = files[fileIndex];
-                var addressesWithTimeStamp = currentFile.Split('\n');
+                var addressesWithTimeStamp = currentFile.Split(new string[] { HISTORY_RECORD_END_LINE }, StringSplitOptions.None);
+                foreach (var add in addressesWithTimeStamp)
+                {
+                    Debug.WriteLine(add);
+                }
                 rTxtHistoryResponse.Text += GetNormalizedHistoryFile(addressesWithTimeStamp);
             }
             if (response.Length > 0)
@@ -203,19 +214,61 @@ namespace school_buddy_desktop
                 var addressWithTimeStamp = addressesWithTimeStamp[addressWithTimeStampIndex];
                 if (addressWithTimeStamp != "")
                 {
-                    var parameters = addressWithTimeStamp.Split(';');
+                    var parameters = addressWithTimeStamp.Split(new string[] { HISTORY_RECORD_PARAMETER_SEPARATOR }, StringSplitOptions.None);
                     var address = parameters[0];
+                    // Debug.WriteLine(DecryptStringFromBytes_Aes(Encoding.ASCII.GetBytes(address), Encoding.ASCII.GetBytes("qwertyuiopasdfgs")));
                     var timeStamp = Int32.Parse(parameters[1]);
                     var newerThan15Days = ((DateTimeOffset)DateTime.Today.AddDays(-15)).ToUnixTimeSeconds() <= timeStamp;
                     if (newerThan15Days)
                     {
-                        var localDateTime = UnixTimeStampToLocalDateTime(timeStamp);
-                        var newLine = string.Format("{0};{1}", address, localDateTime) + '\n';
-                        normalizedHistoryFile += newLine;
+                       var localDateTime = UnixTimeStampToLocalDateTime(timeStamp);
+                       var newLine = string.Format("{0};{1}", address, localDateTime) + '\n';
+                       normalizedHistoryFile += newLine;
                     }
                 }
             }
             return normalizedHistoryFile;
+        }
+
+        static string DecryptStringFromBytes_Aes(byte[] cipherText, byte[] Key)
+        {
+            // Check arguments.
+            if (cipherText == null || cipherText.Length <= 0)
+                throw new ArgumentNullException("cipherText");
+            if (Key == null || Key.Length <= 0)
+                throw new ArgumentNullException("Key");
+
+            // Declare the string used to hold
+            // the decrypted text.
+            string plaintext = null;
+
+            // Create an Aes object
+            // with the specified key and IV.
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = Key;
+                aesAlg.IV = new byte[16];
+
+                // Create a decryptor to perform the stream transform.
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
+                // Create the streams used for decryption.
+                using (MemoryStream msDecrypt = new MemoryStream(cipherText))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+
+                            // Read the decrypted bytes from the decrypting stream
+                            // and place them in a string.
+                            plaintext = srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+            }
+
+            return plaintext;
         }
 
         private void SerialGetDeviceInfoComplete(string response)
@@ -302,7 +355,7 @@ namespace school_buddy_desktop
 
         private string GetSerialResponseFromSerialData(string command)
         {
-            return _serialData.Replace("" + END_COMMAND_CHAR, "").Replace(command, "");
+            return _serialData.Replace(END_COMMAND, "").Replace(command, "");
         }
 
         private void SetFormStateConnectedWaitingSerialResponse()
@@ -385,6 +438,21 @@ namespace school_buddy_desktop
             return dateTimeOffset.LocalDateTime;
         }
 
+        private void UpdateSelectedPortName()
+        {
+            var selectedPortName = toolStripCbPorts.Text;
+            if (selectedPortName != "")
+            {
+                connectToolStripMenuItem.Enabled = true;
+                SetPortToolStripTextWithPortName(selectedPortName);
+            }
+            else
+            {
+                connectToolStripMenuItem.Enabled = false;
+                SetDefaultPortToolStripText();
+            }
+        }
+
         #endregion
 
         #region GUI
@@ -401,17 +469,7 @@ namespace school_buddy_desktop
 
         private void toolStripCbPorts_DropDownClosed(object sender, EventArgs e)
         {
-            var selectedPortName = toolStripCbPorts.Text;
-            if (selectedPortName != "")
-            {
-                connectToolStripMenuItem.Enabled = true;
-                SetPortToolStripTextWithPortName(selectedPortName);
-            }
-            else
-            {
-                connectToolStripMenuItem.Enabled = false;
-                SetDefaultPortToolStripText();
-            }
+            UpdateSelectedPortName();
         }
 
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)

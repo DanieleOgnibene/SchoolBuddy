@@ -80,7 +80,7 @@ void OnScanResults(BLEScanResults scanResults) {
         }
       }
       if (HasToBeSaved(sensorName, currentExposureValue)) {
-        sensorAddressesToBeSaved[sensorAddressesToBeSavedFreeIndex] = sensorAddress;
+        sensorAddressesToBeSaved[sensorAddressesToBeSavedFreeIndex] = cipher->encryptString(sensorAddress);
         if (sensorAddressesToBeSavedLength < sensorAddressesToBeSavedMaxLength) {
           sensorAddressesToBeSavedLength++;
           sensorAddressesToBeSavedFreeIndex++;
@@ -107,7 +107,7 @@ void OnScanResults(BLEScanResults scanResults) {
     for (int index = 0; index < sensorAddressesToBeSavedLength; index++) {
       const String currentSensorAddress = sensorAddressesToBeSaved[index];
       if (currentHistoryFileContent.indexOf(currentSensorAddress) == -1){
-        newSensorAddressesWithTimeStampToBeSaved[newSensorAddressesWithTimeStampToBeSavedLength] = currentSensorAddress + ";" + nowTimeStamp;
+        newSensorAddressesWithTimeStampToBeSaved[newSensorAddressesWithTimeStampToBeSavedLength] = currentSensorAddress + "SEPARATOR" + nowTimeStamp;
         newSensorAddressesWithTimeStampToBeSavedLength++;
       }
     }

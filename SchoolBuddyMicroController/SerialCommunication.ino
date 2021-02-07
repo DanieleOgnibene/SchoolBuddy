@@ -1,4 +1,4 @@
-const char END_COMMAND_CHAR = '#';
+const String END_COMMAND = "END_COMMAND";
 const char COMMAND_PARAMTERS_SEPARATOR = ';';
 const String COMMAND_OK_RESPONSE = "OK";
 const String COMMAND_KO_RESPONSE = "KO";
@@ -30,7 +30,7 @@ void ReadSerialInput() {
   while (Serial.available()) {
     char inChar = (char)Serial.read();
     serialInput += inChar;
-    if (inChar == END_COMMAND_CHAR) {
+    if (serialInput.endsWith(END_COMMAND)) {
       serialCommandReceived = true;
     }
   }
@@ -67,14 +67,14 @@ void HandleGetHistoryCommand() {
     Serial.print(GetHistoryFileContent(fileIndex));
     Serial.print("END_FILE");
   }
-  Serial.print(END_COMMAND_CHAR);
+  Serial.print(END_COMMAND);
 }
 
 void HandleResetDeviceCommand() {
   ResetDevice();
   Serial.print(RESET_DEVICE_COMMAND);
   Serial.print(COMMAND_OK_RESPONSE);
-  Serial.print(END_COMMAND_CHAR);
+  Serial.print(END_COMMAND);
 }
 
 void HandleInitDeviceCommand() {
@@ -82,7 +82,7 @@ void HandleInitDeviceCommand() {
   InitDevice(); 
   Serial.print(INIT_DEVICE_COMMAND);
   Serial.print(COMMAND_OK_RESPONSE);
-  Serial.print(END_COMMAND_CHAR);
+  Serial.print(END_COMMAND);
 }
 
 void HandleGetDeviceNameCommand() {
@@ -90,7 +90,7 @@ void HandleGetDeviceNameCommand() {
   Serial.print(GetDeviceNameFileContent());
   Serial.print(COMMAND_PARAMTERS_SEPARATOR);
   Serial.print(BLEDevice::getAddress().toString().c_str());
-  Serial.print(END_COMMAND_CHAR);
+  Serial.print(END_COMMAND);
 }
 
 void ResetDevice() {
@@ -100,7 +100,7 @@ void ResetDevice() {
 }
 
 void InitDevice() {
-  String configuration = serialInput.substring(INIT_DEVICE_COMMAND.length(), serialInput.length() - 1);
+  String configuration = serialInput.substring(INIT_DEVICE_COMMAND.length(), serialInput.length() - END_COMMAND.length());
   int splitIndex = configuration.indexOf(COMMAND_PARAMTERS_SEPARATOR);
   int unixTime = configuration.substring(0, splitIndex).toInt();
   String deviceName = configuration.substring(splitIndex + 1);

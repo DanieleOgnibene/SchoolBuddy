@@ -79,7 +79,10 @@ void decrypt(unsigned char * chipherText, char * key, unsigned char * outputBuff
 void setup() {
 
   Serial.begin(9600);
+}
 
+void loop() {
+  
   delay(1000);
 
   char test[10];
@@ -92,15 +95,13 @@ void setup() {
   const int textLength = strlen(plainText);
   
   unsigned char cipherTextOutput[textLength];
-  unsigned char decipheredTextOutput[textLength];
+  // unsigned char decipheredTextOutput[textLength];
 
   encryptLongText(plainText, key, cipherTextOutput);
-  decryptLongText(cipherTextOutput, key, decipheredTextOutput);
+  // decryptLongText(cipherTextOutput, key, decipheredTextOutput);
 
-  Serial.println("\n\nDeciphered text:");
+  //Serial.println("\n\nDeciphered text:");
   for (int i = 0; i < 16; i++) {
-    Serial.print((char)decipheredTextOutput[i]);
+    Serial.print((char)cipherTextOutput[i]);
   }
 }
-
-void loop() {}

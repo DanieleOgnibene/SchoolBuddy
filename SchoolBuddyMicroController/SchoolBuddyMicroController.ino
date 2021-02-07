@@ -7,6 +7,9 @@
 #include <BLE2902.h>
 #include <Wire.h>
 #include "RTClib.h"
+#include "Cipher.h"
+
+Cipher * cipher = new Cipher();
 
 const int SERIAL_PORT = 9600;
 
@@ -21,6 +24,7 @@ void setup() {
   InitSerial();
   InitRTC();
   InitSPIFFS();
+  InitCipher();
   InitProximitySensorTask();
   InitSerialCommunicationTask();
 }
@@ -40,6 +44,11 @@ void InitSerial() {
 
 void InitSPIFFS() {
   SPIFFS.begin(true);
+}
+
+void InitCipher() {
+  char * key = "qwertyuiopasdfgs";
+  cipher->setKey(key);
 }
 
 void InitProximitySensorTask() {

@@ -7,7 +7,7 @@ void RemoveHistoryFiles() {
 void UpdateHistoryFileContent(String sensorAddressesWithTimeStamp[], int sensorAddressesWithTimeStampLength) {
   String newContent = "";
   for (int i = 0; i < sensorAddressesWithTimeStampLength; i++) {
-    newContent += sensorAddressesWithTimeStamp[i] + '\n';
+    newContent += sensorAddressesWithTimeStamp[i] + "END_LINE";
   }
   File file = SPIFFS.open(GetHistoryFilePath(0), FILE_APPEND);
   file.print(newContent);
